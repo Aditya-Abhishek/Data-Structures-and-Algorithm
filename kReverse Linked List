@@ -1,0 +1,61 @@
+kReverse
+Given a singly linked list of integers, reverse the nodes of the linked list 'k' at a time and return its modified list.
+ 'k' is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of 'k,' then left-out nodes, in the end, should be reversed as well.
+ 
+ 
+ 
+ /****************************************************************
+ 
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+	        int data;
+	        Node *next;
+	        Node(int data)
+	        {
+		        this->data = data;
+		        this->next = NULL;
+	        }
+        };
+
+*****************************************************************/
+
+void reverseLinkedList(Node *head, Node *tail) {
+  // Write your code here
+  Node *current = head;
+  if (current != tail) {
+    int temp = current->data;
+    current->data = tail->data;
+    tail->data = temp;
+    while (current->next != tail)
+      current = current->next;
+    if (head->next == tail)
+      return;
+    reverseLinkedList(head->next, current);
+  } else
+    return;
+}
+
+
+Node *kReverse(Node *head, int k)
+{
+	//Write your code here
+        if (head == NULL)
+          return head;
+        int count = k;
+        Node *current = head;
+        Node *prev = head;
+        while (current != NULL) {
+          while (count != 1 && count != 0 && prev->next != NULL) {
+            prev = prev->next;
+            count--;
+          }
+          reverseLinkedList(current, prev);
+          prev = prev->next;
+          current = prev;
+          count = k;
+        }
+        return head;
+}
